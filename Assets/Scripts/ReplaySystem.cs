@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class ReplaySystem : MonoBehaviour
 {
-    private const int bufferFrames = 100;
+    private const int bufferFrames = 1000;
     private MyKeyFrame[] keyFrames = new MyKeyFrame[bufferFrames];
-    private Rigidbody rigidbody;
+    private Rigidbody rigidBody;
+    private GameManager manager;
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
+        manager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Record();
+        if(manager.recording)
+        {
+            Record();
+        }
+        else
+        {
+            PlayBack();
+        }
     }
+
     private void PlayBack()
     {
-        rigidbody.isKinematic = false;
+        rigidBody.isKinematic = true;
         int frame = Time.frameCount % bufferFrames;
         print("Reading frame " + frame);
         transform.position = keyFrames[frame].position;
@@ -29,7 +39,7 @@ public class ReplaySystem : MonoBehaviour
     }
     private void Record()
     {
-        rigidbody.isKinematic = true;
+        rigidBody.isKinematic = false;
         int frame = Time.frameCount % bufferFrames;
         float time = Time.time;
         print("Writing frame" + frame);
