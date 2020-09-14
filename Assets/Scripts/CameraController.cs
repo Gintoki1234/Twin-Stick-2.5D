@@ -18,5 +18,7 @@ public class CameraController : MonoBehaviour
     {
         follow = objectToFollow.transform.position;
         transform.position = follow + offset;
+        Debug.Log("RightHoriz is " + Input.GetAxis("RightHoriz"));
+        Debug.Log("RightVert is " + Input.GetAxis("RightVert"));
     }
 }
