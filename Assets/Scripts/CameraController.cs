@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     Vector3 offset;
     void Start()
     {
+        objectToFollow = GameObject.FindGameObjectWithTag("Player");
         offset = transform.position;
         follow = objectToFollow.transform.position;
     }
@@ -17,7 +18,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         follow = objectToFollow.transform.position;
-        transform.position = follow + offset;
+        transform.position = follow + offset;        
         Debug.Log("RightHoriz is " + Input.GetAxis("RightHoriz"));
         Debug.Log("RightVert is " + Input.GetAxis("RightVert"));
     }
